@@ -1,3 +1,44 @@
 * {
-  background-color: rgb(145, 180, 145);
+  background-color: #3a6147;
+}
+
+h1 {
+  color: white;
+  font-size: 30pt;
+}
+
+img {
+  border-radius: 50%;
+  box-sizing: border-box;
+  border: 12px solid #558D68;
+}
+
+#imgdiv {
+  border-radius: 50%;
+  padding: 20px;
+  border: 5px solid white;
+  display: inline-block;
+}
+
+#formContainer {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  width: 20vh;
+}
+
+p {
+  font-size: 12pt;
+  color: #96c2a4;
+}
+
+#btndiv {
+  margin-top: 30px;
+}
+
+center {
+  margin-top: 20px;
+  margin-bottom: 30px;
 }

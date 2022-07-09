@@ -1,11 +1,16 @@
 <link rel="stylesheet" href="/css/main.css">
 <script defer src="/js/app.js"></script>
 
+<div id="backdiv">
+  <img src="../pic/Untitled-1.png" alt="" width="100px" height="100px">
+</div>
+<div id="img container" class="text-center">
+  <div id="imgdiv">
+    <img id="logo" src="../pic/logo.jpg" class="mx-auto d-block" width="250" height="250">
+  </div>
+</div>
 {{#if userId}}
-<br>
-<br>
-
-<div class="mainContainer d-grid gap-2 col-4 mx-auto">
+<div id="main" class="mainContainer d-grid gap-2 col-4 mx-auto">
   <button data-wh="all" type="button" class="btn btn-light">Все листки адаптации</button>
   <button data-wh="my" type="button" class="btn btn-light">Мои листки адаптации</button>
   {{#if admin}}
@@ -14,13 +19,9 @@
   <button data-wh="out" type="button" class="btn btn-secondary">Выход</button>
   <div class="infoContainer text-dark">
   </div>
-  <ol id="ulContainer" class="text-dark">
-
-  </ol>
-  <div class="buttonContainer">
-
-  </div>
+  <div class="buttonContainer"></div>
+  <ul id="ulContainer" class="">
+  </ul>
 </div>
 <br>
-<center><img src="../pic/bg.png" class="background" width="400" height="400" /></center>
 {{/if}}

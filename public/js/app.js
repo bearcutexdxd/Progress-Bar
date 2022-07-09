@@ -31,8 +31,8 @@ function generateLink() {
 
 function progbar(num) {
   return `
-  <div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: ${num}%" aria-valuenow="${num}" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress" style="height:22px">
+  <div class="progress-bar" role="progressbar" style="width: ${num}%" aria-valuenow="${num}" aria-valuemin="0" aria-valuemax="100">${num}%</div>
 </div>
   `;
 }
@@ -54,7 +54,7 @@ function innerlist(lists, boxes) {
     for (let j = 0; j < boxes.length; j += 1) {
       if (lists[i].id == boxes[j].link_id) {
         const num = percent(boxes[j]);
-        res += `<li ><a class="text-dark" href="${lists[i].link}">${lists[i].nameEmployee}</a>${progbar(num)}</li>`;
+        res += `<li ><a class="" href="${lists[i].link}">${lists[i].nameEmployee}</a>${progbar(num)}</li>`;
       }
     }
   }
@@ -91,7 +91,7 @@ function newList() {
 
 function copyLink() {
   return `
-    <button type="button" data-wh="copy" class="btn btn-success">Скопировать ссылку</button><br>
+    <button type="button" data-wh="copy" class="btn btn-success" id="copybtn">Скопировать ссылку</button><br>
     `;
 }
 
@@ -132,7 +132,7 @@ function addFormForm() {
     <label for="exampleInputPassword1" class="form-label">Имя наставника</label>
     <input name="nameMentor" type="text" class="form-control" id="exampleInputPassword1">
   </div>
-  <button type="submit" class="btn btn-success">Создать!</button>
+  <button type="submit" class="btn btn-success" id="btn3">Создать!</button>
 </form>
 `;
 }
@@ -171,8 +171,8 @@ container.addEventListener('click', async (e) => {
       infoContainer.innerHTML = '';
       buttonContainer.innerHTML = '';
       ulContainer.innerHTML = '';
-      ulContainer.insertAdjacentHTML('afterbegin', innerlist(lists, box3));
       buttonContainer.insertAdjacentHTML('afterbegin', newList());
+      ulContainer.insertAdjacentHTML('afterbegin', innerlist(lists, box3));
     } else {
       alert('something went wrong');
     }
@@ -250,7 +250,7 @@ container.addEventListener('click', async (e) => {
         infoContainer.innerHTML = '';
         ulContainer.innerHTML = '';
         buttonContainer.innerHTML = '';
-        infoContainer.innerHTML = `<h5>Чек-лист ${allInputs.nameEmployee}</h5><a class="clink" href="${allInputs.link}">${allInputs.link}</a>`;
+        infoContainer.innerHTML = `<h5>Чек-лист ${allInputs.nameEmployee}:</h5><a class="clink" href="${allInputs.link}">${allInputs.link}</a>`;
         buttonContainer.insertAdjacentHTML('afterbegin', copyLink());
       } else {
         alert('something went wrong');
