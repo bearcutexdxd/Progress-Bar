@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.green {
+  color: #81af37;
+}
+
+.progress {
+  position: sticky;
+  top: 0;
+}
+
+#container {
+  margin-top: 20px;
+  margin-bottom: 5vh;
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+h2 {
+  margin-top: 45px;
+}
+
+#ending {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.toptext {
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.der {
+  font-size: 14pt;
+}
+
+p {
+  font-size: 18px;
+}
+
+.checkfield {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.form-check-label {
+  font-size: 17px;
+}
+
+#together {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#yo {
+  margin-bottom: 0;
+}
+
+#less {
+  margin-top: 30px;
+}
+
+.form-check-input {
+  margin-right: 10px;
+}
+
+#q8 {
+  margin-right: 7px;
+}
