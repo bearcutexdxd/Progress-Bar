@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 const container = document.querySelector('.mainContainer');
 const infoContainer = document.querySelector('.infoContainer');
 const ulContainer = document.querySelector('#ulContainer');
@@ -5,7 +6,6 @@ const buttonContainer = document.querySelector('.buttonContainer');
 
 function dropButton() {
   return `
-
 <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     Статус
@@ -49,16 +49,21 @@ function percent(box) {
 
 function innerlist(lists, boxes) {
   let res = '';
-  for (let i = 0; i < lists.length; i++) {
-    const num = percent(boxes[i]);
-    res += `<li ><a class="text-dark" href="${lists[i].link}">${lists[i].nameEmployee}</a>${progbar(num)}</li>`;
+  boxes = boxes.filter((el) => el !== undefined);
+  for (let i = 0; i < lists.length; i += 1) {
+    for (let j = 0; j < boxes.length; j += 1) {
+      if (lists[i].id == boxes[j].link_id) {
+        const num = percent(boxes[j]);
+        res += `<li ><a class="text-dark" href="${lists[i].link}">${lists[i].nameEmployee}</a>${progbar(num)}</li>`;
+      }
+    }
   }
   return res;
 }
 
 function innerUsers(users) {
   let res = '';
-  for (let i = 0; i < users.length; i++) {
+  for (let i = 0; i < users.length; i += 1) {
     if (users[i].isAdmin === true) {
       res += `<li><span class="h">${users[i].email}</span> <span class="r">(Администратор)</span> ${dropButton()}<br></li>`;
     } else { res += `<li><span class="h">${users[i].email}</span> <span class="r">(Пользователь)</span> ${dropButton()}<br></li>`; }
@@ -93,7 +98,6 @@ function copyLink() {
 async function copyUrl(linkData) {
   try {
     await navigator.clipboard.writeText(linkData);
-    alert('Ссылка скопирована в буфер обмена');
   } catch (err) {
     alert('Ошибка! Не удалось скопировать ссылку');
   }
@@ -133,20 +137,13 @@ function addFormForm() {
 `;
 }
 
+// -----------------все листки------------------------
 container.addEventListener('click', async (e) => {
-  // -----------------все листки------------------------
   if (e.target.type === 'button' && e.target.dataset.wh === 'all') {
     const response = await fetch('/allforms');
-    // const response2 = await fetch('/allbox');
     const response2 = await fetch('/formsAndBoxes');
     const lists = await response.json();
     const box = await response2.json();
-    // console.log('+++++++++++++++++++', box);
-    // console.log('+++++++++++++++++++', lists);
-    // const lis = lists.sort((a, b) => a.id - b.i);
-    // const bo = box.sort((a, b) => a.link_id - b.link_i);
-    // console.log('...................', bo);
-    // console.log('...................', lis);
     const box2 = box.map((el) => el.Checkboxes);
     const box3 = box2.map((elem) => elem = elem[0]);
 
@@ -156,7 +153,7 @@ container.addEventListener('click', async (e) => {
       ulContainer.innerHTML = '';
       ulContainer.insertAdjacentHTML('afterbegin', innerlist(lists, box3));
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 
@@ -165,47 +162,19 @@ container.addEventListener('click', async (e) => {
   if (e.target.type === 'button' && e.target.dataset.wh === 'my') {
     const response2 = await fetch('/myforms');
     const response = await fetch('/formsAndCheckboxes');
-    // const response2 = await fetch('/allbox');
-
     const lists = await response2.json();
     const box = await response.json();
-    console.log('11111111LISTS', lists);
     const box2 = box.map((el) => el.Checkboxes);
     const box3 = box2.map((elem) => elem = elem[0]);
-    console.log('!!!!!!!!!!!!!!!', box3);
-
-    // const box2 = box.filter((el) => {
-    //   el.creator_id === userId;
-    // });
 
     if (response.ok && response2.ok) {
       infoContainer.innerHTML = '';
       buttonContainer.innerHTML = '';
       ulContainer.innerHTML = '';
       ulContainer.insertAdjacentHTML('afterbegin', innerlist(lists, box3));
-
-      // const
-      // const test = lists.map((el)=>{return el.id})
-      // console.log('9999555555556666222222',test);
-
-      // const resp = await fetch('/myformsbylinkid/',{
-      //   method: 'post',
-      //   headers: {
-      //     'Content-type': 'application/json',
-      //   },
-      //   body: JSON.stringify(test),
-      // })
-
-      // const ttt = await resp.json();
-      // console.log('AAAANNNSSSWWEEERRR', ttt);
-
-      // infoContainer.innerHTML = '';
-      // buttonContainer.innerHTML = '';
-      // ulContainer.innerHTML = '';
-      // ulContainer.insertAdjacentHTML('afterbegin', innerlist(lists));
       buttonContainer.insertAdjacentHTML('afterbegin', newList());
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 
@@ -222,7 +191,7 @@ container.addEventListener('click', async (e) => {
       ulContainer.insertAdjacentHTML('afterbegin', innerUsers(data));
       buttonContainer.insertAdjacentHTML('afterbegin', newUser());
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 
@@ -251,7 +220,7 @@ container.addEventListener('click', async (e) => {
         ulContainer.insertAdjacentHTML('beforeend', adduser(allInputs.email));
         buttonContainer.insertAdjacentHTML('afterbegin', newUser());
       } else {
-        alert('что-то пошло не так');
+        alert('something went wrong');
       }
     });
   }
@@ -284,7 +253,7 @@ container.addEventListener('click', async (e) => {
         infoContainer.innerHTML = `<h5>Чек-лист ${allInputs.nameEmployee}</h5><a class="clink" href="${allInputs.link}">${allInputs.link}</a>`;
         buttonContainer.insertAdjacentHTML('afterbegin', copyLink());
       } else {
-        alert('что-то пошло не так');
+        alert('something went wrong');
       }
     });
   }
@@ -294,6 +263,7 @@ container.addEventListener('click', async (e) => {
     const placeLink = infoContainer.querySelector('.clink');
     const link = placeLink.innerText;
     copyUrl(link);
+    buttonContainer.innerHTML = '<button type="button" data-wh="copy" class="btn btn-success">Ссылка скопирована</button><br>';
   }
 
   // -------------------выйти из сеанса-----------------------------
@@ -326,7 +296,7 @@ container.addEventListener('click', async (e) => {
       infoContainer.innerHTML = '';
       role.innerText = '(Пользователь)';
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 
@@ -352,7 +322,7 @@ container.addEventListener('click', async (e) => {
 
       role.innerText = '(Администратор)';
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 
@@ -377,7 +347,7 @@ container.addEventListener('click', async (e) => {
       closestli.remove();
       buttonContainer.insertAdjacentHTML('afterbegin', newUser());
     } else {
-      alert('что-то пошло не так');
+      alert('something went wrong');
     }
   }
 });

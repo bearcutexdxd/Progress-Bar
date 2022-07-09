@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const bcrypt = require('bcrypt');
 const { Checkbox, Form, User } = require('../db/models');
 
 router.get('/form/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const currCheckbox = await Checkbox.findOne({
-      where: { link_id: Number(id) }, // number?
+      where: { link_id: Number(id) },
     });
 
     res.json(currCheckbox).status(200);
@@ -19,7 +18,7 @@ router.post('/form', async (req, res) => {
   const { formOutput, formId } = req.body;
   try {
     const currCheckbox = await Checkbox.findOne({
-      where: { link_id: Number(formId) }, // change later
+      where: { link_id: Number(formId) },
     });
     if (currCheckbox) {
       try {
@@ -41,11 +40,11 @@ router.post('/form', async (req, res) => {
             updatedAt: new Date(),
           },
           {
-            where: { link_id: Number(formId) }, // change later
+            where: { link_id: Number(formId) },
           },
         );
       } catch (error) {
-        console.log(error, 'update error');
+        return res.sendStatus(418);
       }
     } else {
       try {
@@ -63,12 +62,12 @@ router.post('/form', async (req, res) => {
           q11: formOutput.q11,
           q12: formOutput.q12,
           q8_Str: formOutput.names,
-          link_id: Number(formId), // change later
+          link_id: Number(formId),
           createdAt: new Date(),
           updatedAt: new Date(),
         });
       } catch (error) {
-        console.log(error, 'create error');
+        return res.sendStatus(418);
       }
     }
     return res.sendStatus(200);

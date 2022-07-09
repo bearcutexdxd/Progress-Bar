@@ -1,8 +1,5 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
-// const isRegistered = require('../middlewares/isRegistered');
-// const authorized = require('../middlewares/authorized');
-// const bcrypt = require('bcrypt');
 const { Form, User, Checkbox } = require('../db/models');
 
 router.get('/', (req, res) => {
@@ -10,7 +7,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/main', (req, res) => {
-  res.render('main');
+  if (req.session.userId) {
+    res.render('main');
+  } else {
+    res.redirect('/');
+  }
 });
 
 router.get('/error', (req, res) => {
@@ -24,20 +25,12 @@ router.get('/allforms', async (req, res) => {
 
 router.get('/myforms', async (req, res) => {
   try {
-    console.log('MMMMMYYYY  FFFFFFFOOOORMMMMS');
     const lists = await Form.findAll({ where: { creator_id: req.session.userId } });
-    console.log('88888888888888888888888888888888888888888', req.session.userId);
     res.json(lists);
   } catch (error) {
-    alert('whats happening?');
+    return res.sendStatus(418);
   }
 });
-
-async function gett(i) {
-  const back = await Checkbox.findOne({ where: { link_id: i } });
-  console.log('back', back);
-  return back;
-}
 
 router.get('/allusers', async (req, res) => {
   const allusers = await User.findAll();
@@ -49,7 +42,6 @@ router.post('/main', async (req, res) => {
   try {
     const user = await User.findOne({ where: { email } });
     if (user.email === email) {
-      // if (await bcrypt.compare(pass, user.pass)) {
       if (pass === user.pass) {
         req.session.userEmail = user.email;
         req.session.userId = user.id;
@@ -87,11 +79,7 @@ router.post('/newform', async (req, res) => {
 
 router.post('/update', async (req, res) => { // adding role to the user and returning all users
   const { email, role } = req.body;
-  console.log(role);
   try {
-    const currUser = await User.findOne({
-      where: { email },
-    });
     if (role === 'admin') {
       await User.update({
         isAdmin: true,
@@ -117,10 +105,8 @@ router.post('/update', async (req, res) => { // adding role to the user and retu
 });
 
 router.get('/logout', (req, res) => {
-  console.log('VVVVVIIIIIIIHHHOOODDD');
   req.session.destroy();
   res.clearCookie('user_sid');
-  // res.redirect('/');
   res.sendStatus(200);
 });
 
@@ -163,48 +149,37 @@ router.get('/mybox', async (req, res) => {
   try {
     const boxes = await Checkbox.findAll({ where: { link_id: req.session.userId } });
     res.json(boxes);
-    console.log(boxes, 'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
   } catch (error) {
-    alert('whats happening?');
+    res.sendStatus(418);
   }
 });
 
 router.get('/formsAndCheckboxes', async (req, res) => {
   try {
     const data = await Form.findAll({ include: Checkbox });
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
-    // const box = data.map((el) => el.creator_id == req.session.userId);
     const box = [];
     for (let i = 0; i < data.length; i += 1) {
       if (data[i].creator_id == req.session.userId) {
         box.push(data[i]);
       }
     }
-    console.log('444444444444444444444444', box);
-
     res.json(box);
   } catch (error) {
     res.sendStatus(418);
   }
 });
-
 
 router.get('/formsAndBoxes', async (req, res) => {
   try {
     const data = await Form.findAll({ include: Checkbox });
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', data);
-    // const box = data.map((el) => el.creator_id == req.session.userId);
     const box = [];
     for (let i = 0; i < data.length; i += 1) {
       box.push(data[i]);
     }
-    console.log('444444444444444444444444', box);
-
     res.json(box);
   } catch (error) {
     res.sendStatus(418);
   }
 });
-
 
 module.exports = router;
