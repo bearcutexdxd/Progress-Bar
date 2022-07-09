@@ -71,7 +71,7 @@ li {
 }
 
 .progress-bar {
-  background-color: #52a354 !important;
+  background-color: #7dbe38 !important;
 }
 
 .buttonContainer {
@@ -85,6 +85,10 @@ li {
 }
 
 #btn3 {
+  width: 40%;
+}
+
+#btn4 {
   width: 40%;
 }
 
@@ -103,3 +107,40 @@ h5 {
 #copybtn {
   margin-top: 0px;
 }
+
+.li1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding-left: 75px;
+  color: white;
+}
+
+.h {
+  /* padding-right: 200px; */
+}
+
+.r {
+  /* padding-right: 100px; */
+
+}
+
+.dropdown-toggle {
+  width: auto;
+  /* padding-right: 60px; */
+
+}
+/* #ulContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#dropdownMenuButton1 {
+  width: auto;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  margin-top: 10px;
+  align-self: center;
+} */

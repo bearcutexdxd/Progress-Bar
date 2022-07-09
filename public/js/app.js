@@ -10,7 +10,7 @@ function dropButton() {
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
     Статус
   </button>
-  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+  <ul class="dropdown-menu"  aria-labelledby="dropdownMenuButton1">
     <li><button data-role="admin" class="dropdown-item" type="button">Назначить администратором</button></li>
     <li><button data-role="user" class="dropdown-item" type="button">Назначить пользователем</button></li>
     <li><button data-role="del" class="dropdown-item" type="button">Удалить сотрудника</button></li>
@@ -65,8 +65,8 @@ function innerUsers(users) {
   let res = '';
   for (let i = 0; i < users.length; i += 1) {
     if (users[i].isAdmin === true) {
-      res += `<li><span class="h">${users[i].email}</span> <span class="r">(Администратор)</span> ${dropButton()}<br></li>`;
-    } else { res += `<li><span class="h">${users[i].email}</span> <span class="r">(Пользователь)</span> ${dropButton()}<br></li>`; }
+      res += `<li class="li1"><span class="h">${users[i].email}</span> <span class="r">(Администратор)</span> ${dropButton()}<br></li>`;
+    } else { res += `<li class="li1"><span class="h">${users[i].email}</span> <span class="r">(Пользователь)</span> ${dropButton()}<br></li>`; }
   }
   return res;
 }
@@ -112,10 +112,10 @@ function addForm() {
     <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
   </div>
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">Password</label>
+    <label for="exampleInputPassword1" class="forСоздать!m-label">Password</label>
     <input name="pass" type="password" class="form-control" id="exampleInputPassword1">
   </div>
-  <button type="submit" class="btn btn-success">Создать!</button>
+  <button type="submit" class="btn btn-success" id="btn4">Создать!</button>
 </form>
 `;
 }
